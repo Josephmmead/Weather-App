@@ -61,11 +61,13 @@ $(document).ready(function(){
         }).then(function(res){ 
 
                 var uv = res.current.uvi;
-                var uvEl = $("<h6>").addClass("card-text").text("UV Index:" + uv);
+                var uvEl = $("<h6>").addClass("card-text").text("UV Index: " + uv);
                 
-            // was unable to figure out this portion
-                // $(".main").append("<br>", uvEl);
+            
+                $(".main").append("<br>", uvEl);
 
+
+        // was unable to figure out this portion
                 // if(uv <= 2){
                 //     uvEl.addClass("uvLow")
                 // }
