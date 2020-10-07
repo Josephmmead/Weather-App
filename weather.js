@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+    // functions for setting and getting the citys
     var history = JSON.parse(window.localStorage.getItem("history")) || [];
     var key = "81f40804d680e3c5a27cee0529465e35";
 
@@ -12,17 +14,18 @@ $(document).ready(function(){
         $("#city-list").prepend(li)
     }
     
+    // setting the current weather card
     function searchWeather(query) {
 
         
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=" + key + "&units=imperial";
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + query + "&appid=" + key + "&units=imperial";
 
         $.ajax({
             url: queryURL,
             method: "GET",
             dataType: "json"
         }).then(function(response){
-            // console.log(response)
+            
             $("#today").empty();
             $("#forcast").empty();
 
@@ -38,7 +41,7 @@ $(document).ready(function(){
             var wind = response.wind.speed; 
             var windEl = $("<h6>").addClass("card-text").text("Wind Speed: " + wind +  " MPH");
             
-            var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
+            var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
             
          
 
@@ -48,6 +51,7 @@ $(document).ready(function(){
         })
     };
     
+    // getting and setting the 5 day forcast cards
     function getForecast(lat, lon){
        
         var queryURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${key}`
@@ -57,25 +61,25 @@ $(document).ready(function(){
             method: "GET",
             dataType: "json"
         }).then(function(res){ 
-            console.log(res);
 
                 var uv = res.current.uvi;
-                var uvEl = $("<h6>").addClass("card-text").text("UV Index: " + uv);
-        
-                $(".main").append("<br>", uvEl);
+                var uvEl = $("<h6>").addClass("card-text").text("UV Index:" + uv);
+                
+            // was unable to figure out this portion
+                // $(".main").append("<br>", uvEl);
 
-                if(uv <= 2){
-                    uvEl.addClass("uvLow")
-                }
-                else if(uv >= 3 && uv <= 5 ){
-                    uvEl.addClass("uvGood")
-                }
-                else if(uv >= 6 && uv <= 7){
-                    uvEl.addClass("uvMod")
-                }
-                else{
-                    uvEl.addClass("uvHigh")
-                }
+                // if(uv <= 2){
+                //     uvEl.addClass("uvLow")
+                // }
+                // else if(uv >= 3 && uv <= 5 ){
+                //     uvEl.addClass("uvGood")
+                // }
+                // else if(uv >= 6 && uv <= 7){
+                //     uvEl.addClass("uvMod")
+                // }
+                // else{
+                //     uvEl.addClass("uvHigh")
+                // }
                 
 
                 var today = new Date();
@@ -90,13 +94,11 @@ $(document).ready(function(){
                     var cardBody = $("<div>").addClass("card-body main");
                     var date = (mm + "/" + dd + "/" + yyyy);
                     var cardTitle = $("<h5>").addClass("card-title").text(date);
-                    var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + res.daily[i].weather[0].icon + ".png")
+                    var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + res.daily[i].weather[0].icon + ".png")
                     var temp = Math.round(res.daily[i].temp.day);
                     var tempEl =  $("<p>").addClass("card-text").text("Temp: " + temp + String.fromCharCode(176) + "F");
                     var humidity = res.daily[i].humidity;
                     var humidityEl = $("<p>").addClass("card-text").text("Humidity: " + humidity +  " %");
-
-                    console.log(date);
 
                     $("#forcast").append(newCol.append(newCard.append(cardBody.append(cardTitle, img, tempEl, humidityEl))));
 
@@ -106,7 +108,7 @@ $(document).ready(function(){
         });
     };
 
-
+// onclick functions
     $(".history").on("click", "li", function(){
         searchWeather($(this).text())
     })
@@ -114,6 +116,7 @@ $(document).ready(function(){
 
     $("#searchBtn").on("click", function(){
         event.preventDefault();
+
         var cityName = $("#city-name").val().trim().toUpperCase();
         searchWeather(cityName)
   
