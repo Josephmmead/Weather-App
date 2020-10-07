@@ -42,9 +42,7 @@ $(document).ready(function(){
             var windEl = $("<h6>").addClass("card-text").text("Wind Speed: " + wind +  " MPH");
             
             var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
-            
          
-
             $("#today").append(card.append(cardBody.append(cardTitle.append("  " + "(" + currentTime + ")"+ " ").append(img), "<br>", tempEl,"<br>", humidityEl,"<br>", windEl)))
 
             getForecast(response.coord.lat, response.coord.lon)
@@ -127,6 +125,6 @@ $(document).ready(function(){
             window.localStorage.setItem("history", JSON.stringify(history))
             makeRow(cityName);
         }
-        console.log(localStorage)
+        
     });
 });
