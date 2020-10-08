@@ -25,6 +25,7 @@ $(document).ready(function(){
             method: "GET",
             dataType: "json"
         }).then(function(response){
+            console.log(response);
             
             $("#today").empty();
             $("#forcast").empty();
@@ -46,9 +47,10 @@ $(document).ready(function(){
             $("#today").append(card.append(cardBody.append(cardTitle.append("  " + "(" + currentTime + ")"+ " ").append(img), "<br>", tempEl,"<br>", humidityEl,"<br>", windEl)))
 
             getForecast(response.coord.lat, response.coord.lon)
+            
         })
     };
-    
+
     // getting and setting the 5 day forcast cards
     function getForecast(lat, lon){
        
@@ -59,27 +61,22 @@ $(document).ready(function(){
             method: "GET",
             dataType: "json"
         }).then(function(res){ 
-
+            console.log(res);
                 var uv = res.current.uvi;
                 var uvEl = $("<h6>").addClass("card-text").text("UV Index: " + uv);
                 
             
                 $(".main").append("<br>", uvEl);
 
-
-        // was unable to figure out this portion
-                // if(uv <= 2){
-                //     uvEl.addClass("uvLow")
-                // }
-                // else if(uv >= 3 && uv <= 5 ){
-                //     uvEl.addClass("uvGood")
-                // }
-                // else if(uv >= 6 && uv <= 7){
-                //     uvEl.addClass("uvMod")
-                // }
-                // else{
-                //     uvEl.addClass("uvHigh")
-                // }
+                if(uv <= 2){
+                    uvEl.addClass("text-success")
+                }
+                else if(uv >= 3 && uv <= 5 ){
+                    uvEl.addClass("text-warning")
+                }
+                else{
+                    uvEl.addClass("text-danger")
+                }
                 
 
                 var today = new Date();
