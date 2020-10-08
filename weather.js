@@ -68,10 +68,10 @@ $(document).ready(function(){
             
                 $(".main").append("<br>", uvEl);
 
-                if(uv <= 2){
+                if(uv < 3){
                     uvEl.addClass("text-success")
                 }
-                else if(uv >= 3 && uv <= 5 ){
+                else if(uv >= 3 && uv < 6 ){
                     uvEl.addClass("text-warning")
                 }
                 else{
