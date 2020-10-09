@@ -30,11 +30,16 @@ $(document).ready(function(){
             $("#today").empty();
             $("#forcast").empty();
 
+            var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; 
+                var yyyy = today.getFullYear();
+
             var card = $("<div>").addClass("card mt-3");
             var cardBody = $("<div>").addClass("card-body main");
             var currentCity = response.name;
             var cardTitle = $("<h2>").addClass("card-title").text(currentCity);
-            var currentTime = moment().subtract(10, 'days').calendar();
+            var currentTime = (mm + "/" + dd + "/" + yyyy);
             var temp = Math.round(response.main.temp);
             var tempEl = $("<h6>").addClass("card-text").text("Temperature: " + temp + String.fromCharCode(176) + "F");
             var humidity = response.main.humidity;
@@ -84,6 +89,8 @@ $(document).ready(function(){
                 var mm = today.getMonth()+1; 
                 var yyyy = today.getFullYear();
 
+
+                
                 for(var i = 1; i < 6; i++){
             
                     var newCol = $("<div>").addClass("col-xs-2 mt-4")
